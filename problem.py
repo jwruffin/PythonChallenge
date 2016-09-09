@@ -152,6 +152,7 @@ def inputMatrix():
         if master[i] == 1:
             flip(master, m, n, i, islandsizes)
     print("The largest island is size " + str(max(islandsizes)))
+    raw_input()
 
 
 def flip(nums, rows, cols, index, sizes):
