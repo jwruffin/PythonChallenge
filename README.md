@@ -1,2 +1,13 @@
-# PythonChallenge
-Python challenge for Idea Evolver
+# Python Challenge
+
+Instructions included in `problem.py`.
+
+
+
+
+
+
+
+
+
+
