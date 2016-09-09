@@ -107,21 +107,15 @@ def inputMatrix():
 
     inputmatrix = []
 
-    # We use "iter" to take the input matrix as a multiline input, and we stop reading input when we get to a blank line
-
     sentinel = ''
     for line in iter(raw_input, sentinel):
         inputmatrix.append(line.split())
-
-    # We pull out the first two elements and label them "m" and "n", these are the number of rows and cols respectively
 
     numberofrows = inputmatrix.pop(0)
     numberofcols = inputmatrix.pop(0)
 
     m = int(numberofrows[0])
     n = int(numberofcols[0])
-
-    # We then reduce the remaining list of lists to one list and change the elements to integers
 
     combinedinputmatrix = []
 
@@ -159,64 +153,26 @@ def flip(nums, rows, cols, index, sizes):
     group = [index]
     queue = deque(group)
     island = []
-    while queue:  # until the queue is empty
-
-        # pop out the first index in the queue
+    while queue:
 
         topIndex = queue.popleft()
 
-        # add that index to the "island" list
-
         island.append(topIndex)
-
-        # determine the row and col of the index
 
         row = topIndex / cols
         col = topIndex % cols
 
-        # check neighbors for 1s and if we find any, add their indicies to the queue and flip them to 0
+        neighbors = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+        coordinates = [row, col]
 
-        # up
-        if row > 0 and nums[(row - 1) * cols + col] == 1:
-            queue.append((row - 1) * cols + col)
-            nums[(row - 1) * cols + col] = 0
+        for neighbor in neighbors:
+            newcoordinates = [x + y for x, y in zip(coordinates, neighbor)]
+            newrow = newcoordinates[0]
+            newcol = newcoordinates[1]
 
-        # right
-        if col < cols - 1 and nums[(row * cols + col + 1)] == 1:
-            queue.append(row * cols + col + 1)
-            nums[row * cols + col + 1] = 0
-
-        # down
-        if row < rows - 1 and nums[(row + 1) * cols + col] == 1:
-            queue.append((row + 1) * cols + col)
-            nums[(row + 1) * cols + col] = 0
-
-        # left
-        if col > 0 and nums[row * cols + col - 1] == 1:
-            queue.append(row * cols + col - 1)
-            nums[row * cols + col - 1] = 0
-
-        # up right
-        if row > 0 and col < cols - 1 and nums[(row - 1) * cols + col + 1] == 1:
-            queue.append((row - 1) * cols + col + 1)
-            nums[(row - 1) * cols + col + 1] = 0
-
-        # up left
-        if row > 0 and col > 0 and nums[(row - 1) * cols + col - 1] == 1:
-            queue.append((row - 1) * cols + col - 1)
-            nums[(row - 1) * cols + col - 1] = 0
-
-        # down right
-        if row < rows - 1 and col < cols - 1 and nums[(row + 1) * cols + col + 1] == 1:
-            queue.append((row + 1) * cols + col + 1)
-            nums[(row + 1) * cols + col + 1] = 0
-
-        # down left
-        if row < rows - 1 and col > 0 and nums[(row + 1) * cols + col - 1] == 1:
-            queue.append((row + 1) * cols + col - 1)
-            nums[(row + 1) * cols + col - 1] = 0
-
-    # append the length of the list of indicies on the island to "sizes"
+            if rows > newrow >= 0 and cols > newcol >= 0 and nums[newrow * cols + newcol] == 1:
+                queue.append(newrow * cols + newcol)
+                nums[newrow * cols + newcol] = 0
 
     sizes.append(len(list(set(island))))
 
