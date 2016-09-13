@@ -100,16 +100,18 @@
 
 from collections import deque
 
-
 def inputMatrix():
 
     print("Paste matrix below and press Enter twice:")
 
     inputmatrix = []
 
-    sentinel = ''
-    for line in iter(raw_input, sentinel):
-        inputmatrix.append(line.split())
+    while True:
+        line = raw_input()
+        if line:
+            inputmatrix.append(line.split())
+        else:
+            break
 
     numberofrows = inputmatrix.pop(0)
     numberofcols = inputmatrix.pop(0)
@@ -146,7 +148,7 @@ def inputMatrix():
         if master[i] == 1:
             flip(master, m, n, i, islandsizes)
     print("The largest island is size " + str(max(islandsizes)))
-    raw_input()
+    raw_input("Press Enter to continue")
 
 
 def flip(nums, rows, cols, index, sizes):
